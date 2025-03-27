@@ -1,0 +1,12 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "🔍 Checking for sensitive files..."
+
+if grep -r --exclude-dir={node_modules,.git,.husky} -E "API_KEY|SECRET|PASSWORD" .; then
+  echo "❌ Found secrets in the code! Commit rejected."
+  exit 1
+else
+  echo "✅ No secrets found. Proceeding with commit."
+fi
+
